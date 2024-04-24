@@ -17,10 +17,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from videoflix.views import LoginView, RegisterView
+from videoflix.views import LoginView, RegisterView, PasswordResetView, PasswortResetUrlView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
+    path('password_reset/', PasswortResetUrlView.as_view(), name='reset_password'),
+    path('password_reset/<str:encoded_pk>/<str:token>/', PasswordResetView.as_view(), name='reset_password'),
 ]
