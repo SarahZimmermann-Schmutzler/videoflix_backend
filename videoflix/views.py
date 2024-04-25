@@ -44,6 +44,7 @@ class LoginView(ObtainAuthToken):
             'email': user.email
         })
 
+
 class PasswortResetUrlView(generics.GenericAPIView):
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
