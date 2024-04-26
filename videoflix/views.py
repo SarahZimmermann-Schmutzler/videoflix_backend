@@ -8,9 +8,9 @@ from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .serializers import UserSerializer, PasswordResetSerializer, EmailSerializer
+from .serializers import UserSerializer, PasswordResetSerializer, EmailSerializer, ActivateAccountSerializer
 
 # Create your views here.
 class RegisterView(APIView):
@@ -78,6 +78,16 @@ class PasswordResetView(generics.GenericAPIView):
 
         return Response(
             {'message': 'Password reset complete'},
+            status=status.HTTP_200_OK
+        )
+
+
+class ActivateNewAccountView(APIView):
+    def patch(self, request, *args, **kwargs):
+        serializer=ActivateAccountSerializer(data=request.data, context={'kwargs': kwargs})
+        serializer.is_valid(raise_exception=True)
+        return Response(
+            {'message': 'Account is activated'},
             status=status.HTTP_200_OK
         )
 

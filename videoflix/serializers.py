@@ -58,3 +58,17 @@ class PasswordResetSerializer(serializers.Serializer):
         user.set_password(password)
         user.save()
         return data
+
+
+class ActivateAccountSerializer(serializers.Serializer):
+    # class Meta:
+    #     model = User
+    #     fields = '__all__'
+
+    def activate(self, data):
+        encoded_pk = self.context.get('kwargs').get('encoded_pk')
+        pk = urlsafe_base64_decode(encoded_pk).decode()
+        user = User.objects.get(pk=pk)
+        user.is_active=True
+        user.save()
+        return data
