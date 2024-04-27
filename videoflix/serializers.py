@@ -61,9 +61,9 @@ class PasswordResetSerializer(serializers.Serializer):
 
 
 class ActivateAccountSerializer(serializers.Serializer):
-    # class Meta:
-    #     model = User
-    #     fields = '__all__'
+    class Meta:
+        model = User
+        fields = '__all__'
 
     def activate(self, data):
         encoded_pk = self.context.get('kwargs').get('encoded_pk')

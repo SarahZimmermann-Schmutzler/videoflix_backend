@@ -82,9 +82,10 @@ class PasswordResetView(generics.GenericAPIView):
         )
 
 
-class ActivateNewAccountView(APIView):
+class ActivateNewAccountView(generics.GenericAPIView):
+    serializer_class = ActivateAccountSerializer
     def patch(self, request, *args, **kwargs):
-        serializer=ActivateAccountSerializer(data=request.data, context={'kwargs': kwargs})
+        serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
         serializer.is_valid(raise_exception=True)
         return Response(
             {'message': 'Account is activated'},
