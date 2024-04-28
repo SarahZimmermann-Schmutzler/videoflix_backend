@@ -5,6 +5,7 @@ from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.renderers import TemplateHTMLRenderer
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
@@ -81,18 +82,22 @@ class PasswordResetView(generics.GenericAPIView):
             status=status.HTTP_200_OK
         )
 
-def activation(request, **kwargs):
-    if request.method == 'GET':
-        return render(request, 'activation.html')
+# def activation(request, **kwargs):
+#     if request.method == 'GET':
+#         return render(request, 'activation.html')
     
 
-class ActivateNewAccountView(generics.GenericAPIView):   
-    serializer_class = ActivateAccountSerializer
-    def patch(self, request, *args, **kwargs):
-        serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
-        serializer.is_valid(raise_exception=True)
-        return Response(
-            {'message': 'Account is activated'},
-            status=status.HTTP_200_OK
-        )
+class ActivateNewAccountView(generics.GenericAPIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    def get(self, request, *args, **kwargs):
+        return Response(template_name='activation.html')
+       
+    # serializer_class = ActivateAccountSerializer
+    # def patch(self, request, *args, **kwargs):
+    #     serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
+    #     serializer.is_valid(raise_exception=True)
+    #     return Response(
+    #         {'message': 'Account is activated'},
+    #         status=status.HTTP_200_OK
+    #     )
 
