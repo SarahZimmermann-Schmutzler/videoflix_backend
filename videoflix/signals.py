@@ -29,6 +29,7 @@ def activate_account(sender, instance, created, **kwargs):
         encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
         activation_url = reverse('activate_account', kwargs={'encoded_pk': encoded_pk})
         activation_url = f'localhost:8000{activation_url}'
+        # url from hosting-server or localhost:80000
         print('url', activation_url)
 
         # send mail with link to new user

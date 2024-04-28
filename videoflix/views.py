@@ -81,8 +81,12 @@ class PasswordResetView(generics.GenericAPIView):
             status=status.HTTP_200_OK
         )
 
+def activation(request, **kwargs):
+    if request.method == 'GET':
+        return render(request, 'activation.html')
+    
 
-class ActivateNewAccountView(generics.GenericAPIView):
+class ActivateNewAccountView(generics.GenericAPIView):   
     serializer_class = ActivateAccountSerializer
     def patch(self, request, *args, **kwargs):
         serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
