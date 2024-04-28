@@ -85,6 +85,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 
+# Django rest framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication'
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

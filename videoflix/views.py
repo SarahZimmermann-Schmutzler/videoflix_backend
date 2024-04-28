@@ -91,8 +91,8 @@ class ActivateNewAccountView(generics.GenericAPIView):
     renderer_classes = [TemplateHTMLRenderer]
     def get(self, request, *args, **kwargs):
         return Response(template_name='activation.html')
-       
-    # serializer_class = ActivateAccountSerializer
+
+    serializer_class = ActivateAccountSerializer   
     # def patch(self, request, *args, **kwargs):
     #     serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
     #     serializer.is_valid(raise_exception=True)
@@ -100,4 +100,12 @@ class ActivateNewAccountView(generics.GenericAPIView):
     #         {'message': 'Account is activated'},
     #         status=status.HTTP_200_OK
     #     )
+    
+    def patch(self, request, *args, **kwargs):
+        serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
+        serializer.is_valid(raise_exception=True)
+        return Response(
+            {'message': 'Account is activated'},
+            status=status.HTTP_200_OK
+        )
 

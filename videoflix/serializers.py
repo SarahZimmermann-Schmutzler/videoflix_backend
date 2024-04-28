@@ -65,6 +65,14 @@ class ActivateAccountSerializer(serializers.Serializer):
         model = User
         fields = '__all__'
 
+    # def activate(self, data):
+    #     encoded_pk = self.context.get('kwargs').get('encoded_pk')
+    #     pk = urlsafe_base64_decode(encoded_pk).decode()
+    #     user = User.objects.get(pk=pk)
+    #     user.is_active=True
+    #     user.save()
+    #     return data
+    
     def activate(self, data):
         encoded_pk = self.context.get('kwargs').get('encoded_pk')
         pk = urlsafe_base64_decode(encoded_pk).decode()
