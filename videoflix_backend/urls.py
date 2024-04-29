@@ -23,9 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
-    # path('password_reset/', PasswortResetUrlView.as_view(), name='reset_password'),
-    # path('password_reset/<str:encoded_pk>/<str:token>/', PasswordResetView.as_view(), name='reset_password'),
     path('account_activation/', ActivateNewAccountView.as_view()),
-    # path('account_activation/', ActivateNewAccountView.as_view()),
-    # path('account_activation/<str:encoded_pk>/', ActivateNewAccountView.as_view(), name='activate_account'),
 ]
