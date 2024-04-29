@@ -25,39 +25,39 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class EmailSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+# class EmailSerializer(serializers.Serializer):
+#     email = serializers.EmailField()
 
-    class Meta:
-        fields = ('email')
+#     class Meta:
+#         fields = ('email')
 
 
-class PasswordResetSerializer(serializers.Serializer):
-    password = serializers.CharField(
-        write_only=True,
-        min_length=8,
-    )
+# class PasswordResetSerializer(serializers.Serializer):
+#     password = serializers.CharField(
+#         write_only=True,
+#         min_length=8,
+#     )
 
-    class Meta:
-        fields = ('password')
+#     class Meta:
+#         fields = ('password')
     
-    def validate(self, data):
-        password = data.get('password')
-        token = self.context.get('kwargs').get('token')
-        encoded_pk = self.context.get('kwargs').get('encoded_pk')
+#     def validate(self, data):
+#         password = data.get('password')
+#         token = self.context.get('kwargs').get('token')
+#         encoded_pk = self.context.get('kwargs').get('encoded_pk')
 
-        if token is None or encoded_pk is None:
-            raise serializers.ValidationError('Missing data')
+#         if token is None or encoded_pk is None:
+#             raise serializers.ValidationError('Missing data')
         
-        pk = urlsafe_base64_decode(encoded_pk).decode()
-        user = User.objects.get(pk=pk)
+#         pk = urlsafe_base64_decode(encoded_pk).decode()
+#         user = User.objects.get(pk=pk)
 
-        if not PasswordResetTokenGenerator().check_token(user, token):
-            raise serializers.ValidationError('the reset token is invalid')
+#         if not PasswordResetTokenGenerator().check_token(user, token):
+#             raise serializers.ValidationError('the reset token is invalid')
         
-        user.set_password(password)
-        user.save()
-        return data
+#         user.set_password(password)
+#         user.save()
+#         return data
 
 
 class ActivateAccountSerializer(serializers.Serializer):
@@ -72,11 +72,3 @@ class ActivateAccountSerializer(serializers.Serializer):
     #     user.is_active=True
     #     user.save()
     #     return data
-    
-    def activate(self, data):
-        encoded_pk = self.context.get('kwargs').get('encoded_pk')
-        pk = urlsafe_base64_decode(encoded_pk).decode()
-        user = User.objects.get(pk=pk)
-        user.is_active=True
-        user.save()
-        return data

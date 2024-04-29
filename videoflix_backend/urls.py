@@ -17,15 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from videoflix.views import LoginView, RegisterView, PasswordResetView, PasswortResetUrlView, ActivateNewAccountView
+from videoflix.views import LoginView, RegisterView, ActivateNewAccountView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
-    path('password_reset/', PasswortResetUrlView.as_view(), name='reset_password'),
-    path('password_reset/<str:encoded_pk>/<str:token>/', PasswordResetView.as_view(), name='reset_password'),
-    path('account_activation/<str:encoded_pk>/', ActivateNewAccountView.as_view(), name='activate_account'),
+    # path('password_reset/', PasswortResetUrlView.as_view(), name='reset_password'),
+    # path('password_reset/<str:encoded_pk>/<str:token>/', PasswordResetView.as_view(), name='reset_password'),
     path('account_activation/', ActivateNewAccountView.as_view()),
+    # path('account_activation/', ActivateNewAccountView.as_view()),
     # path('account_activation/<str:encoded_pk>/', ActivateNewAccountView.as_view(), name='activate_account'),
 ]
