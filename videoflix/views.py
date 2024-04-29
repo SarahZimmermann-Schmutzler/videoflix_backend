@@ -88,9 +88,9 @@ class LoginView(ObtainAuthToken):
     
 
 class ActivateNewAccountView(APIView):
-    def patch(self, request):
-        test = request.data.get('decoded_pk')
-        user = User.objects.get(pk=test)
+    def patch(self, request,):
+        decoded_pk = request.data.get('decoded_pk')
+        user = User.objects.get(pk=decoded_pk)
         user.is_active = True
         serializer=ActivateAccountSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
@@ -98,32 +98,5 @@ class ActivateNewAccountView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
     
-    # renderer_classes = [TemplateHTMLRenderer]
-    # def get(self, request, encoded_pk=None, *args, **kwargs):
-    #     pk = urlsafe_base64_decode(encoded_pk).decode()
-    #     user = User.objects.get(pk=pk)
-    #     user.is_active = True
-    #     serializer=ActivateAccountSerializer(user, data=request.data, partial=True)
-    #     if serializer.is_valid():
-    #         serializer.update()
-    #     return Response(serializer.errors, template_name='activation.html')
-
-    # serializer_class = ActivateAccountSerializer   
-    # def patch(self, request, *args, **kwargs):
-    #     serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
-    #     serializer.is_valid(raise_exception=True)
-    #     return Response(
-    #         {'message': 'Account is activated'},
-    #         status=status.HTTP_200_OK
-    #     )
     
-    # def patch(self, request, *args, **kwargs):
-    #     encoded_pk = request.data.get('encoded_pk')
-
-    #     serializer=self.serializer_class(data=request.data, context={'kwargs': kwargs})
-    #     serializer.is_valid(raise_exception=True)
-    #     return Response(
-    #         {'message': 'Account is activated'},
-    #         status=status.HTTP_200_OK
-    #     )
 

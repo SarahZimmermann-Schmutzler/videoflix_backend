@@ -60,7 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
 #         return data
 
 
-class ActivateAccountSerializer(serializers.Serializer):
+class ActivateAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
