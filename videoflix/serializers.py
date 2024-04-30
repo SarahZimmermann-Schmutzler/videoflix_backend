@@ -25,11 +25,12 @@ class UserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# class EmailSerializer(serializers.Serializer):
-#     email = serializers.EmailField()
+class EmailSerializer(serializers.Serializer):
+    # email = serializers.EmailField()
 
-#     class Meta:
-#         fields = ('email')
+    class Meta:
+        model = User
+        fields = '_all_'
 
 
 # class PasswordResetSerializer(serializers.Serializer):
@@ -65,10 +66,8 @@ class ActivateAccountSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
-    # def activate(self, data):
-    #     encoded_pk = self.context.get('kwargs').get('encoded_pk')
-    #     pk = urlsafe_base64_decode(encoded_pk).decode()
-    #     user = User.objects.get(pk=pk)
-    #     user.is_active=True
-    #     user.save()
-    #     return data
+
+class ResetPasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'

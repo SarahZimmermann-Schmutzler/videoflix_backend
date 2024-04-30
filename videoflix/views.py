@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse
+import os, ssl, smtplib
+from email.message import EmailMessage
 from rest_framework import generics, status
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from rest_framework.authtoken.models import Token
@@ -11,7 +13,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 
-from .serializers import UserSerializer, ActivateAccountSerializer
+from .serializers import EmailSerializer, ResetPasswordSerializer, UserSerializer, ActivateAccountSerializer
 
 # Create your views here.
 class RegisterView(APIView):
@@ -98,5 +100,47 @@ class ActivateNewAccountView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
     
-    
+
+class ForgottenPasswordView(APIView):
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = request.data.get('email')
+        user = User.objects.filter(email=email).first()
+        if user:
+            encoded_pk= urlsafe_base64_encode(force_bytes(user.pk))
+            activation_url = f'localhost:4200/resetPassword/{encoded_pk}'
+            # send mail with link to new user
+            email_sender='sarah.zimmermannschmutzler@gmail.com'
+            email_password=os.environ.get("GMAIL_PWD")
+            email_receiver=user.email
+            subject='VIDEOFLIX Team'
+            body=f'Hi {user.username}, here is your Link to reset your VIDEOFLIX password: http://{activation_url}' 
+
+            em=EmailMessage()
+            em['From']=email_sender
+            em['To']=email_receiver
+            em['Subject']=subject
+            em.set_content(body)
+            context=ssl.create_default_context()
+
+            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+                smtp.login(email_sender, email_password)
+                smtp.sendmail(email_sender, email_receiver, em.as_string())
+
+        return Response(serializer.errors) 
+
+
+class ResetPasswordView(APIView):
+    def patch(self, request):
+        decoded_pk = request.data.get('decoded_pk')
+        password = request.data.get('new_password')
+        user = User.objects.get(pk=decoded_pk)
+        user.set_password(password)
+        serializer=ResetPasswordSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
 
