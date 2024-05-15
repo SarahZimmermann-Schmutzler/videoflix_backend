@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from videoflix.views import ForgottenPasswordView, LoginView, RegisterView, ActivateNewAccountView, ResetPasswordView
+from videoflix.views import ForgottenPasswordView, LoginView, RegisterView, ActivateNewAccountView, ResetPasswordView, LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('account_activation/', ActivateNewAccountView.as_view()),
     path('forgotten_password/', ForgottenPasswordView.as_view()),
     path('reset_password/', ResetPasswordView.as_view()),
+    path('logout/<userId>/', LogoutView.as_view()),
 ]

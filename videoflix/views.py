@@ -2,6 +2,8 @@ import os, ssl, smtplib
 from email.message import EmailMessage
 from rest_framework import generics, status
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -108,5 +110,13 @@ class ResetPasswordView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
+    
 
-
+class LogoutView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def delete(self, request, userId=None):
+        user = User.objects.get(pk=userId)
+        user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
