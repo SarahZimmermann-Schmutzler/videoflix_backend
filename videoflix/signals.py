@@ -1,26 +1,36 @@
 # from .models import Video
 from django.contrib.auth.models import User
 from django.dispatch import receiver
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 import os, ssl, smtplib
 from email.message import EmailMessage
 
+from videoflix.models import Video
 
-# @receiver(post_save, sender=Video)
+
+@receiver(post_save, sender=Video)
 # soll imer ausgeführt werden, wenn Video hochgeladen wurde
-# def video_post_safe(sender, instance, created, **kwargs):
+def video_post_safe(sender, instance, created, **kwargs):
     # welche Instanz (Model) hat es gesendet; Video selber (Object); boolean, das anzeigt, ob Object frisch erstellt wurde;
-    # print('Video wurde gespeichert')
+    print('Video wurde gespeichert')
     # wird immer ausgeführt, wenn gespeichert
-    # if created:
-    #     print('New video created')
+    if created:
+        print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
 
-# Funktion verlinken mit @receiver...
 
+# deletes media from hard disk after video was deleted from server/backend
+@receiver(post_delete, sender=Video)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    if instance.video_file:
+        if os.path.isfile(instance.video_file.path):
+            os.remove(instance.video_file.path)
+
+
+# sends activation mail after new user was registered
 @receiver(post_save, sender=User)
 def activate_account(sender, instance, created, **kwargs):
     if created:

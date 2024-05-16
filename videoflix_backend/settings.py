@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 #     }
 # }
 
+# PostgreSQL
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -136,6 +137,11 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+
+# Media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 
 # Static files (CSS, JavaScript, Images)
