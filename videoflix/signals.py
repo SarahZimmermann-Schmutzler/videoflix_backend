@@ -9,6 +9,7 @@ import os, ssl, smtplib
 from email.message import EmailMessage
 
 from videoflix.models import Video
+from videoflix.tasks import convert_480p
 
 
 @receiver(post_save, sender=Video)
@@ -20,6 +21,7 @@ def video_post_safe(sender, instance, created, **kwargs):
     if created:
         print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
+        convert_480p(instance.video_file.path)
 
 
 # deletes media from hard disk after video was deleted from server/backend
@@ -28,6 +30,9 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.video_file:
         if os.path.isfile(instance.video_file.path):
             os.remove(instance.video_file.path)
+    
+    if instance.preview_img:
+        os.remove(instance.preview_img.path)
 
 
 # sends activation mail after new user was registered
