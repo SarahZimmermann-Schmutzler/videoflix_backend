@@ -19,9 +19,9 @@ def video_post_safe(sender, instance, created, **kwargs):
     print('Video wurde gespeichert')
     # wird immer ausgeführt, wenn gespeichert
     if created:
-        print('New video created', instance.video_file.path)
+        print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
-        # convert_480p(instance.video_file.path)
+        convert_480p(instance.video_file.path)
 
 
 # deletes media from hard disk after video was deleted from server/backend
