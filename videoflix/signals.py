@@ -9,7 +9,7 @@ import os, ssl, smtplib
 from email.message import EmailMessage
 
 from videoflix.models import Video
-from videoflix.tasks import convert_480p
+from videoflix.tasks import convert_1080p, convert_720p, convert_480p
 
 
 @receiver(post_save, sender=Video)
@@ -21,6 +21,8 @@ def video_post_safe(sender, instance, created, **kwargs):
     if created:
         print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
+        convert_1080p(instance.video_file.path)
+        convert_720p(instance.video_file.path)
         convert_480p(instance.video_file.path)
 
 
