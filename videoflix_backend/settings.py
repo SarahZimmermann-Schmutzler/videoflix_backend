@@ -26,6 +26,16 @@ SECRET_KEY = 'django-insecure-xeodur9c8%83^@u^o#b9v00!3g-3j&gjvzhpy#d64s7boplobo
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+def show_toolbar(request):    
+    # für einen bestimmten User anzeigen:   
+    # return not request.user.username == "Sarah"
+    # Toolbar ausschalten
+    return True
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+}
+
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
