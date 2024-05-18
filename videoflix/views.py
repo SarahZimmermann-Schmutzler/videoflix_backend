@@ -9,8 +9,13 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.views.decorators.cache import cache_page
+from django.conf import settings
+from django.core.cache.backends.base import DEFAULT_TIMEOUT
 
 from .serializers import EmailSerializer, ResetPasswordSerializer, UserSerializer, ActivateAccountSerializer
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
 
 # Create your views here.
 class RegisterView(APIView):
@@ -120,3 +125,11 @@ class LogoutView(APIView):
         user = User.objects.get(pk=userId)
         user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+    
+
+class WatchVideo(APIView):
+    @cache_page(CACHE_TTL)
+    # CACHE_TTL (total lifetime) ist Zeit, wie lange gecached werden soll
+    # definiert in settings.py; 15Min
+    def function():
+        pass
