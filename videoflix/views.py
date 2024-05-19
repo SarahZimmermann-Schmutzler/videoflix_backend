@@ -139,7 +139,7 @@ class WatchVideo(APIView):
 class VideosView(APIView):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
-
+    # @cache_page(CACHE_TTL)
     def get(self, request, videoId=None, format=None):
         """
         Returns a list of the selected Videos or all Videos.
