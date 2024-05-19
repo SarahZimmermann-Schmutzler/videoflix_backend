@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
+from videoflix.models import Video
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the User model.
@@ -71,3 +73,14 @@ class ResetPasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class VideoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Video
+        fields = '__all__'
+        # FileField = required = False
+            
+        # extra_kwargs = {
+        #     'FileField': {'required': False, 'allow_null': True}
+        # }
