@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
@@ -139,7 +140,7 @@ class WatchVideo(APIView):
 class VideosView(APIView):
     # authentication_classes = [TokenAuthentication]
     # permission_classes = [IsAuthenticated]
-    # @cache_page(CACHE_TTL)
+    @method_decorator(cache_page(CACHE_TTL))
     def get(self, request, videoId=None, format=None):
         """
         Returns a list of the selected Videos or all Videos.
