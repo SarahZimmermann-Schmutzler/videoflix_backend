@@ -62,7 +62,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'videoflix.apps.VideoflixConfig',
     'debug_toolbar',
-    'django_rq'
+    'django_rq',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -205,6 +206,7 @@ MEDIA_URL = '/media/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
