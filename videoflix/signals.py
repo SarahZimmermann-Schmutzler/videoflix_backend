@@ -10,6 +10,7 @@ from email.message import EmailMessage
 
 from videoflix.models import Video
 from videoflix.tasks import convert_1080p, convert_720p, convert_480p
+import django_rq
 
 
 @receiver(post_save, sender=Video)
@@ -22,9 +23,15 @@ def video_post_safe(sender, instance, created, **kwargs):
         print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
         if instance.video_file:
-            convert_1080p(instance.video_file.path)
-            convert_720p(instance.video_file.path)
-            convert_480p(instance.video_file.path)
+            # im Hintergrund konvertieren
+            queue = django_rq.get_queue('default', autocommit=True)
+            queue.enqueue(convert_1080p, instance.video_file.path)
+            queue.enqueue(convert_720p, instance.video_file.path)
+            queue.enqueue(convert_480p, instance.video_file.path)
+            # im Vordergrund konvertieren
+            # convert_1080p(instance.video_file.path)
+            # convert_720p(instance.video_file.path)
+            # convert_480p(instance.video_file.path)
 
 
 # deletes media from hard disk after video was deleted from server/backend

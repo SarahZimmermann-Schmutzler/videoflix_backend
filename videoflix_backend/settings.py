@@ -89,9 +89,10 @@ RQ_QUEUES = {
         'USERNAME': 'some-user',
         'PASSWORD': 'foobared',
         'DEFAULT_TIMEOUT': 360,
-        'REDIS_CLIENT_KWARGS': {    # Eventual additional Redis connection arguments
-            'ssl_cert_reqs': None,
-        },
+        # Eventual additional Redis connection arguments
+        # 'REDIS_CLIENT_KWARGS': {    
+        #     'ssl_cert_reqs': None,
+        # },
     },
     
     # Aufgaben mit hoher Priorität
