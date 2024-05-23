@@ -7,7 +7,6 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 import os, ssl, smtplib
 from email.message import EmailMessage
-
 from videoflix.models import Video
 from videoflix.tasks import convert_1080p, convert_720p, convert_480p
 import django_rq

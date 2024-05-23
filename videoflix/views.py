@@ -13,9 +13,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 from django.core.cache.backends.base import DEFAULT_TIMEOUT
-
 from videoflix.models import Video
-
 from .serializers import EmailSerializer, ResetPasswordSerializer, UserSerializer, ActivateAccountSerializer, VideoSerializer
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
@@ -56,7 +54,7 @@ class LoginView(ObtainAuthToken):
 class ActivateNewAccountView(APIView):
     """
     API view for Activation.
-    activates a new user account.
+    Activates a new user account.
     """
     def patch(self, request,):
         decoded_pk = request.data.get('decoded_pk')
@@ -72,7 +70,7 @@ class ActivateNewAccountView(APIView):
 class ForgottenPasswordView(APIView):
     """
     API view for a forgotten password.
-    sends user Email with Link to reset the password
+    Sends user Email with Link to reset the password.
     """
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
@@ -126,22 +124,20 @@ class LogoutView(APIView):
     permission_classes = [IsAuthenticated]
     
     def delete(self, request, userId=None):
+        """
+        Deletes Session-Token from User.
+        """
         user = User.objects.get(pk=userId)
         user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
     
 
-class WatchVideo(APIView):
-    @cache_page(CACHE_TTL)
-    # CACHE_TTL (total lifetime) ist Zeit, wie lange gecached werden soll
-    # definiert in settings.py; 15Min
-    def function():
-        pass
-
 class VideosView(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
     @method_decorator(cache_page(CACHE_TTL))
+    # uses redis fetch data from cache; timeout 15min.
     def get(self, request, videoId=None, format=None):
         """
         Returns a list of the selected Videos or all Videos.
