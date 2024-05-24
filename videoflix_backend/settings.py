@@ -39,10 +39,12 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'backend.s-zimmermann-schmutzler.de/videoflix',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = [
     'http://localhost:4200',
+    'https://videoflix.s-zimmermann-schmutzler.de',
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
