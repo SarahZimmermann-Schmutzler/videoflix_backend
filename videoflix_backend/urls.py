@@ -20,6 +20,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 from videoflix.views import ForgottenPasswordView, LoginView, RegisterView, ActivateNewAccountView, ResetPasswordView, LogoutView, VideosView
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +34,4 @@ urlpatterns = [
     path('django-rq/', include('django_rq.urls')),
     path('api/videos/', VideosView.as_view()),
     path('api/videos/<videoId>/', VideosView.as_view()),
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) + staticfiles_urlpatterns()
