@@ -51,8 +51,8 @@ def activate_account(sender, instance, created, **kwargs):
         # create activation link
         user = instance
         encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
-        activation_url = f'localhost:4200/activateAccount/{encoded_pk}'
-        # activation_url = f'https://videoflix.s-zimmermann-schmutzler.de//activateAccount/{encoded_pk}'
+        # activation_url = f'localhost:4200/activateAccount/{encoded_pk}'
+        activation_url = f'https://videoflix.s-zimmermann-schmutzler.de//activateAccount/{encoded_pk}'
         # url from frontend
         print('url', activation_url)
 
