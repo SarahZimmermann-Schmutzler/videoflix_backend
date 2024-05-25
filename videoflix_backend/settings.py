@@ -40,7 +40,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'backend.s-zimmermann-schmutzler.de',
-    'backend.s-zimmermann-schmutzler.de/videoflix',
+    'backend.s-zimmermann-schmutzler.de/videoflix_backend',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = [
