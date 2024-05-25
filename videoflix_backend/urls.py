@@ -24,6 +24,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('videoflix/', include('videoflix_backend.urls')),
     path('', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
     path('account_activation/', ActivateNewAccountView.as_view()),
