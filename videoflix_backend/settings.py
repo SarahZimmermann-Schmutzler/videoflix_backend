@@ -30,7 +30,7 @@ def show_toolbar(request):
     # für einen bestimmten User anzeigen:   
     # return not request.user.username == "Sarah"
     # Toolbar ausschalten
-    return True
+    return False
 
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
