@@ -23,8 +23,8 @@ from videoflix.views import ForgottenPasswordView, LoginView, RegisterView, Acti
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    path('videoflix_backend/', include('videoflix_backend.urls')),
-    path('admin/', admin.site.urls, name='admin'),
+    # path('videoflix_backend/', include('videoflix_backend.urls')),
+    path('admin/', admin.site.urls),
     path('', LoginView.as_view()),
     path('register/', RegisterView.as_view()),
     path('account_activation/', ActivateNewAccountView.as_view()),
