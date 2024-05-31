@@ -39,6 +39,7 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
+    'https://sarah-zimmermann-schmutzler.developerakademie.org',
     '34.118.16.160',
     'backend.s-zimmermann-schmutzler.de',
     'backend.s-zimmermann-schmutzler.de/videoflix_backend',
