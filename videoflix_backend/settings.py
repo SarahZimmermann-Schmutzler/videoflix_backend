@@ -43,6 +43,7 @@ ALLOWED_HOSTS = [
     '34.118.16.160',
     'backend.s-zimmermann-schmutzler.de',
     'backend.s-zimmermann-schmutzler.de/videoflix_backend',
+    'backend.s-zimmermann-schmutzler.de/videoflix',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = [
