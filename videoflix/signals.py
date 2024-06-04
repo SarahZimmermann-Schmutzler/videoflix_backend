@@ -22,9 +22,6 @@ def video_post_safe(sender, instance, created, **kwargs):
     if created:
         print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
-        t = Timer(30, print)
-        t.start()
-
         if instance.video_file:
             # im Hintergrund konvertieren
             # queue = django_rq.get_queue('default', autocommit=True)

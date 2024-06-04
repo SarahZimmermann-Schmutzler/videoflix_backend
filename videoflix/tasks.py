@@ -1,4 +1,5 @@
 import subprocess
+from threading import Timer
 
 # converts uploaded video to 1080p
 def convert_1080p(source):
@@ -6,7 +7,12 @@ def convert_1080p(source):
     converted_file_name = source_without_ending + '_1080p.mp4'
     cmd = 'ffmpeg -i "{}" -s hd1080 -c:v libx264 -crf 23 -c:a aac -strict -2 "{}"'.format(source, converted_file_name)
     print(source_without_ending,converted_file_name,cmd)
+    print(source_without_ending,converted_file_name,cmd)
+    print(source_without_ending,converted_file_name,cmd)
+    print(source_without_ending,converted_file_name,cmd)
     subprocess.run(cmd, capture_output=True)
+t = Timer(30, convert_1080p)
+t.start()
 
 # converts uploaded video to 720p
 def convert_720p(source):
