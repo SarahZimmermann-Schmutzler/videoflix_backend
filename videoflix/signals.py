@@ -1,4 +1,5 @@
 # from .models import Video
+from threading import Timer
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save, post_delete
@@ -31,6 +32,8 @@ def video_post_safe(sender, instance, created, **kwargs):
             # convert_1080p(instance.video_file.path)
             # convert_720p(instance.video_file.path)
             # convert_480p(instance.video_file.path)
+t = Timer(30, video_post_safe)
+t.start()
 
 
 # deletes media from hard disk after video was deleted from server/backend
