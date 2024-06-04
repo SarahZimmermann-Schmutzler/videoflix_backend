@@ -51,7 +51,7 @@ def activate_account(sender, instance, created, **kwargs):
         # create activation link
         user = instance
         encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
-        # activation_url = f'localhost:4200/activateAccount/{encoded_pk}'
+        # activation_url = f'http://localhost:4200/activateAccount/{encoded_pk}'
         activation_url = f'https://videoflix.s-zimmermann-schmutzler.de/activateAccount/{encoded_pk}'
         # url from frontend
         print('url', activation_url)
@@ -62,7 +62,7 @@ def activate_account(sender, instance, created, **kwargs):
         # email_password=os.environ.get('GMAIL_PWD')
         email_receiver=user.email
         subject='VIDEOFLIX Team'
-        body=f'Hi {user.username}, here is your activation Link for your VIDEOFLIX Account: http://{activation_url}' 
+        body=f'Hi {user.username}, here is your activation Link for your VIDEOFLIX Account: {activation_url}' 
 
         em=EmailMessage()
         em['From']=email_sender

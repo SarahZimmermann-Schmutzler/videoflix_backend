@@ -79,14 +79,15 @@ class ForgottenPasswordView(APIView):
         user = User.objects.filter(email=email).first()
         if user:
             encoded_pk= urlsafe_base64_encode(force_bytes(user.pk))
-            # activation_url = f'localhost:4200/resetPassword/{encoded_pk}'
+            # activation_url = f'http://localhost:4200/resetPassword/{encoded_pk}'
             activation_url = f'https://videoflix.s-zimmermann-schmutzler.de/resetPassword/{encoded_pk}'
             # send mail with link to new user
             email_sender='sarah.zimmermannschmutzler@gmail.com'
-            email_password=os.environ.get("GMAIL_PWD")
+            # email_password=os.environ.get("GMAIL_PWD")
+            email_password='awqp jbae mrpe ufqk'
             email_receiver=user.email
             subject='VIDEOFLIX Team'
-            body=f'Hi {user.username}, here is your Link to reset your VIDEOFLIX password: http://{activation_url}' 
+            body=f'Hi {user.username}, here is your Link to reset your VIDEOFLIX password: {activation_url}' 
 
             em=EmailMessage()
             em['From']=email_sender
