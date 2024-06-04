@@ -22,6 +22,9 @@ def video_post_safe(sender, instance, created, **kwargs):
     if created:
         print('New video created')
         # wird ausgeführt, wenn Object erstellt wurde
+        t = Timer(30, print)
+        t.start()
+
         if instance.video_file:
             # im Hintergrund konvertieren
             # queue = django_rq.get_queue('default', autocommit=True)
@@ -32,8 +35,7 @@ def video_post_safe(sender, instance, created, **kwargs):
             convert_1080p(instance.video_file.path)
             convert_720p(instance.video_file.path)
             convert_480p(instance.video_file.path)
-t = Timer(30, video_post_safe)
-t.start()
+
 
 
 # deletes media from hard disk after video was deleted from server/backend
