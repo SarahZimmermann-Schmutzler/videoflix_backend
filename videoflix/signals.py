@@ -58,8 +58,7 @@ def activate_account(sender, instance, created, **kwargs):
 
         # send mail with link to new user
         email_sender='sarah.zimmermannschmutzler@gmail.com'
-        # email_password=os.environ.get("GMAIL_PWD")
-        email_password='ynil vhlu kdfc bzdw'
+        email_password=os.environ.get("GMAIL_PWD")
         email_receiver=user.email
         subject='VIDEOFLIX Team'
         body=f'Hi {user.username}, here is your activation Link for your VIDEOFLIX Account: http://{activation_url}' 
