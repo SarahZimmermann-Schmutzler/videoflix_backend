@@ -39,11 +39,8 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'sarah-zimmermann-schmutzler.developerakademie.org',
     '34.118.16.160',
     'backend.s-zimmermann-schmutzler.de',
-    'backend.s-zimmermann-schmutzler.de/videoflix_backend',
-    'backend.s-zimmermann-schmutzler.de/videoflix',
 ]
 
 CORS_ALLOW_ALL_ORIGINS = [
@@ -101,19 +98,6 @@ RQ_QUEUES = {
         #     'ssl_cert_reqs': None,
         # },
     },
-    
-    # Aufgaben mit hoher Priorität
-    # 'high': {
-    #     'URL': os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0'), # If you're on Heroku
-    #     'DEFAULT_TIMEOUT': 500,
-    # },
-
-    # Aufgaben mit niedriger Priorität
-    # 'low': {
-    #     'HOST': 'localhost',
-    #     'PORT': 6379,
-    #     'DB': 0,
-    # }
 }
 
 CACHES = {    
@@ -221,10 +205,6 @@ STATICFILES_DIRS = [
 #default static files backend.s-zimmermann-schmutzler.de/videoflix
 STATIC_ROOT = '/home/sarah_zimmermannschmutzler/projects/videoflix_backend/static/staticfiles'
 STATIC_URL = 'static/'
-
-#default static files DA Server
-# STATIC_ROOT = '/home/videoflix_backend/static/staticfiles'
-# STATIC_URL = 'static/'
 
 
 # Default primary key field type

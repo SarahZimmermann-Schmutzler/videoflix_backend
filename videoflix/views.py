@@ -1,6 +1,6 @@
 import os, ssl, smtplib
 from email.message import EmailMessage
-from rest_framework import generics, status
+from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
