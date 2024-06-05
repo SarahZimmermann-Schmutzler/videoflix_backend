@@ -1,20 +1,29 @@
-from django.test import TestCase
-from django.test import Client
-import unittest
 from django.contrib.auth.models import User
-from django.test import Client
+from rest_framework.test import APITestCase, APIClient
+
+from django.urls import reverse
+
 
 # Create your tests here.
 
-class VideoTest(unittest.TestCase):
-    def test_videopage(self):
-        self.client = Client()        
-        self.user = User.objects.create_user('test_user', password='test_user')        
-        self.client.login(username='test_user', password='test_user')        
-        
-        response = self.client.get('/api/videos/')
+class LoginViewTest(APITestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.url = reverse('login')  # Passe den URL-Namen an, falls er anders lautet
+        self.user = User.objects.create_user(username='testuser', password='testpassword', email='test@example.com')
+
+    def test_login_success(self):
+        response = self.client.post(self.url, {'username': 'testuser', 'password': 'testpassword'}, format='json')
         self.assertEqual(response.status_code, 200)
-    
-    def test_loginpage(self):
-        response = self.client.get('admin/')
-        self.assertEqual(response.status_code, 200)
+        self.assertIn('token', response.data)
+        self.assertIn('user_id', response.data)
+        self.assertIn('email', response.data)
+        self.assertEqual(response.data['email'], 'test@example.com')
+
+    def test_login_failure(self):
+        response = self.client.post(self.url, {'username': 'testuser', 'password': 'wrongpassword'}, format='json')
+        self.assertEqual(response.status_code, 400)
+        self.assertNotIn('token', response.data)
+        self.assertNotIn('user_id', response.data)
+        self.assertNotIn('email', response.data)
+
