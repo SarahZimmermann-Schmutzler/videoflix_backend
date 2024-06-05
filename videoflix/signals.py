@@ -14,6 +14,9 @@ import django_rq
 # soll imer ausgeführt werden, wenn Video hochgeladen wurde
 def video_post_safe(sender, instance, created, **kwargs):
     # welche Instanz (Model) hat es gesendet; Video selber (Object); boolean, das anzeigt, ob Object frisch erstellt wurde;
+    """
+    After a video is uploaded, it's automatically converted in 1080p, 720p and 480p.
+    """
     print('Video wurde gespeichert')
     # wird immer ausgeführt, wenn gespeichert
     if created:
@@ -35,6 +38,9 @@ def video_post_safe(sender, instance, created, **kwargs):
 # deletes media from hard disk after video was deleted from server/backend
 @receiver(post_delete, sender=Video)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    After a video is deleted, it's automatically deleted from the media folder.
+    """
     if instance.video_file:
         if os.path.isfile(instance.video_file.path):
             os.remove(instance.video_file.path)
@@ -43,9 +49,11 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
         os.remove(instance.preview_img.path)
 
 
-# sends activation mail after new user was registered
 @receiver(post_save, sender=User)
 def activate_account(sender, instance, created, **kwargs):
+    """
+    After a User is registered, it sends an activation mail.
+    """
     if created:
         # create activation link
         user = instance
