@@ -4,6 +4,7 @@ from django.db.models.signals import post_save, post_delete
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 import os, ssl, smtplib
+from dotenv import load_dotenv
 from email.message import EmailMessage
 from videoflix.models import Video
 from videoflix.tasks import convert_1080p, convert_720p, convert_480p
@@ -65,8 +66,8 @@ def activate_account(sender, instance, created, **kwargs):
 
         # send mail with link to new user
         email_sender='sarah.zimmermannschmutzler@gmail.com'
-        # email_password=os.environ.get('GMAIL_PWD')
-        email_password='edpq umjp yubr cniy'
+        load_dotenv()
+        email_password=os.getenv('GMAIL_PWD')
         email_receiver=user.email
         subject='VIDEOFLIX Team'
         body=f'Hi {user.username}, here is your activation Link for your VIDEOFLIX Account: {activation_url}' 

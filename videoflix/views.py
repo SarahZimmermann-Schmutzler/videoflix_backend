@@ -1,4 +1,5 @@
 import os, ssl, smtplib
+from dotenv import load_dotenv
 from email.message import EmailMessage
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken, APIView
@@ -83,8 +84,8 @@ class ForgottenPasswordView(APIView):
             activation_url = f'https://videoflix.s-zimmermann-schmutzler.de/resetPassword/{encoded_pk}'
             # send mail with link to new user
             email_sender='sarah.zimmermannschmutzler@gmail.com'
-            # email_password=os.environ.get("GMAIL_PWD")
-            email_password='edpq umjp yubr cniy'
+            load_dotenv()
+            email_password=os.getenv('GMAIL_PWD')
             email_receiver=user.email
             subject='VIDEOFLIX Team'
             body=f'Hi {user.username}, here is your Link to reset your VIDEOFLIX password: {activation_url}' 
