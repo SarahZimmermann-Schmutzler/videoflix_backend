@@ -18,8 +18,8 @@ FROM python:3.12.2-slim
 
 WORKDIR /app
 
-# Install runtime dependencies needed by psycopg2
-RUN apt-get update && apt-get install -y libpq5 && apt-get clean
+# Install runtime dependencies needed by psycopg2 and netcat
+RUN apt-get update && apt-get install -y libpq5 netcat && apt-get clean
 
 # Copy only the installed dependencies from the builder stage
 COPY --from=builder /usr/local /usr/local
