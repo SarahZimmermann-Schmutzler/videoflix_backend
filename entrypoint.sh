@@ -3,6 +3,13 @@
 # Exit immediately if any command exits with a non-zero status
 set -e
 
+echo "Waiting for PostgreSQL..."
+
+until nc -z "${POSTGRES_HOST:-db}" "${POSTGRES_PORT:-5432}"; do
+  sleep 1
+done
+
+echo "PostgreSQL is available — continuing..."
 
 # Step 1: Run database migrations
 echo "Running database migrations..."
