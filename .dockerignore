@@ -1,0 +1,43 @@
+# Ignore Python cache files and folders
+__pycache__
+*.py[cod]
+*.pyo
+
+# Ignore virtual environments
+venv
+env
+
+# Ignore local configuration files
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+
+# Ignore IDE/Editor-specific files
+*.idea
+*.vscode
+*.swp
+
+# Ignore test and coverage-related files
+.coverage
+*.cover
+*.coverage.*
+coverage/
+htmlcov/
+
+# Ignore static and media files (if generated locally and collected elsewhere)
+#static/
+#media/
+
+# Ignore local environment files
+.env
+.env.*
+
+# Ignore operating system-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Docker-specific files
+docker-compose.override.yml
+Dockerfile*

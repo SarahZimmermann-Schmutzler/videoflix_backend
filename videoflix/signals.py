@@ -19,17 +19,17 @@ def video_post_safe(sender, instance, created, **kwargs):
     After a video is uploaded, it's automatically converted in 1080p, 720p and 480p.
     """
     print('Video wurde gespeichert')
-    # wird immer ausgeführt, wenn gespeichert
+    # is always executed when saved
     if created:
         print('New video created')
-        # wird ausgeführt, wenn Object erstellt wurde
+        # is executed when Object is created
         if instance.video_file:
-            # im Hintergrund konvertieren
+            # Convert in the background
             queue = django_rq.get_queue('default', autocommit=True)
             queue.enqueue(convert_1080p, instance.video_file.path)
             queue.enqueue(convert_720p, instance.video_file.path)
             queue.enqueue(convert_480p, instance.video_file.path)
-            # im Vordergrund konvertieren
+            # Convert in the foreground
             # convert_1080p(instance.video_file.path)
             # convert_720p(instance.video_file.path)
             # convert_480p(instance.video_file.path)
@@ -55,18 +55,20 @@ def activate_account(sender, instance, created, **kwargs):
     """
     After a User is registered, it sends an activation mail.
     """
+    load_dotenv()
+
     if created:
         # create activation link
         user = instance
         encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
         # activation_url = f'http://localhost:4200/activateAccount/{encoded_pk}'
-        activation_url = f'https://videoflix.s-zimmermann-schmutzler.de/activateAccount/{encoded_pk}'
+        activation_url = f'https://{os.getenv('ACTIVATION_URL')}/activateAccount/{encoded_pk}'
         # url from frontend
         print('url', activation_url)
 
         # send mail with link to new user
-        email_sender='sarah.zimmermannschmutzler@gmail.com'
-        load_dotenv()
+        email_sender=os.getenv('EMAIL_SENDER')
+        
         email_password=os.getenv('GMAIL_PWD')
         email_receiver=user.email
         subject='VIDEOFLIX Team'

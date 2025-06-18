@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,15 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-xeodur9c8%83^@u^o#b9v00!3g-3j&gjvzhpy#d64s7boplobo'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 def show_toolbar(request):    
-    # für einen bestimmten User anzeigen:   
-    # return not request.user.username == "Sarah"
-    # Toolbar ausschalten
+    # show for a specific user or superuser:   
+    # return request.user.username == "JaneDoe"
+    # return request.user.is_superuser
+    
+    # disable toolbar
     return False
 
 DEBUG_TOOLBAR_CONFIG = {
@@ -39,13 +44,12 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    '34.118.16.160',
-    'backend.s-zimmermann-schmutzler.de',
+    os.getenv('IP_ADDRESS_VM')
 ]
 
-CORS_ALLOW_ALL_ORIGINS = [
+CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
-    'https://videoflix.s-zimmermann-schmutzler.de',
+    os.getenv('CORS_ALLOWED_ORIGINS'),
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
@@ -55,6 +59,7 @@ CACHE_TTL = 60*15
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,16 +87,16 @@ MIDDLEWARE = [
 ]
 
 INTERNAL_IPS = [
-    "127.0.0.1",
+    os.getenv('INTERNAL_IP', default="127.0.0.1"),
 ]
 
 RQ_QUEUES = {
     'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
+        'HOST': os.getenv('REDIS_HOST', default='localhost'),
+        'PORT': os.getenv('REDIS_PORT'),
         'DB': 0,
         # 'USERNAME': 'some-user',
-        'PASSWORD': 'foobared',
+        'PASSWORD': os.getenv('REDIS_PASSWORD'),
         'DEFAULT_TIMEOUT': 360,
         # Eventual additional Redis connection arguments
         # 'REDIS_CLIENT_KWARGS': {    
@@ -103,9 +108,9 @@ RQ_QUEUES = {
 CACHES = {    
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",   
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": f"redis://{os.getenv('REDIS_HOST', default='localhost')}:{os.getenv('REDIS_PORT')}/1",
         "OPTIONS": { 
-            "PASSWORD": 'foobared',           
+            "PASSWORD": os.getenv('REDIS_PASSWORD'),           
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
         "KEY_PREFIX": "videoflix"
@@ -148,11 +153,11 @@ WSGI_APPLICATION = 'videoflix_backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'videoflix_DB',
-        'USER': 'postgres',
-        'PASSWORD': 'Post123?!',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST', default='localhost'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
