@@ -4,8 +4,8 @@ FROM python:3.12.2-slim AS builder
 
 WORKDIR /app
 
-# intall Git for requirements.txt
-RUN apt-get update && apt-get install -y git
+# intall Git and libpq for requirements.txt
+RUN apt-get update && apt-get install -y git libpq-dev
 
 # Copy only the requirements file to install dependencies
 COPY requirements.txt $WORKDIR
