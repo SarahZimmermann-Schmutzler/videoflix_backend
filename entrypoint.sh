@@ -6,7 +6,7 @@ set -e
 echo "Waiting for PostgreSQL..."
 
 until nc -z "${POSTGRES_HOST:-db}" "${POSTGRES_PORT:-5432}"; do
-  sleep 1
+  sleep 5
 done
 
 echo "PostgreSQL is available — continuing..."
