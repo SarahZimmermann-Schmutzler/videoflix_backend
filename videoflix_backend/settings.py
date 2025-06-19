@@ -208,8 +208,8 @@ STATICFILES_DIRS = [
 ]
 
 #default static files backend.s-zimmermann-schmutzler.de/videoflix
-STATIC_ROOT = '/home/sarah_zimmermannschmutzler/projects/videoflix_backend/static/staticfiles'
-STATIC_URL = 'static/'
+#STATIC_ROOT = '/home/sarah_zimmermannschmutzler/projects/videoflix_backend/static/staticfiles'
+#STATIC_URL = 'static/'
 
 
 # Default primary key field type
