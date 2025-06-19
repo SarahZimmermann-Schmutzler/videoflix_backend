@@ -73,6 +73,7 @@ class ForgottenPasswordView(APIView):
     API view for a forgotten password.
     Sends user Email with Link to reset the password.
     """
+    load_dotenv()
     def post(self, request):
         serializer = EmailSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -81,7 +82,7 @@ class ForgottenPasswordView(APIView):
         if user:
             encoded_pk= urlsafe_base64_encode(force_bytes(user.pk))
             # activation_url = f'http://localhost:4200/resetPassword/{encoded_pk}'
-            activation_url = f'https://videoflix.s-zimmermann-schmutzler.de/resetPassword/{encoded_pk}'
+            activation_url = f'http://{os.getenv('ACTIVATION_URL')}/resetPassword/{encoded_pk}'
             # send mail with link to new user
             email_sender='sarah.zimmermannschmutzler@gmail.com'
             load_dotenv()
@@ -97,7 +98,8 @@ class ForgottenPasswordView(APIView):
             em.set_content(body)
             context=ssl.create_default_context()
 
-            with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+                smtp.starttls(context=context)
                 smtp.login(email_sender, email_password)
                 smtp.sendmail(email_sender, email_receiver, em.as_string())
 
