@@ -19,7 +19,9 @@ FROM python:3.12.2-slim
 WORKDIR /app
 
 # Install runtime dependencies needed by psycopg2 and netcat
-RUN apt-get update && apt-get install -y libpq5 netcat-openbsd && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y libpq5 netcat-openbsd ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy only the installed dependencies from the builder stage
 COPY --from=builder /usr/local /usr/local

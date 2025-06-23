@@ -12,9 +12,8 @@ import django_rq
 
 
 @receiver(post_save, sender=Video)
-# soll imer ausgeführt werden, wenn Video hochgeladen wurde
 def video_post_safe(sender, instance, created, **kwargs):
-    # welche Instanz (Model) hat es gesendet; Video selber (Object); boolean, das anzeigt, ob Object frisch erstellt wurde;
+    # which instance (Model) sent it; video itself (Object); boolean that indicates whether Object was newly created;
     """
     After a video is uploaded, it's automatically converted in 1080p, 720p and 480p.
     """
@@ -35,8 +34,6 @@ def video_post_safe(sender, instance, created, **kwargs):
             # convert_480p(instance.video_file.path)
 
 
-
-# deletes media from hard disk after video was deleted from server/backend
 @receiver(post_delete, sender=Video)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
