@@ -31,6 +31,22 @@ if not User.objects.filter(username='${DJANGO_SUPERUSER_USERNAME}').exists():
     )
 "
 
+# Step 3: Decide what to run
+case "$1" in
+  rqworker)
+    echo "Starting RQ worker..."
+    exec python manage.py rqworker default
+    ;;
+  shell)
+    echo "Opening Django shell..."
+    exec python manage.py shell
+    ;;
+  *)
+    echo "Starting Django development server..."
+    exec python manage.py runserver 0.0.0.0:8000
+    ;;
+esac
+
 # Step 3: Start the Django server 
-echo "Starting the server..."
-python manage.py runserver 0.0.0.0:8000
+#echo "Starting the server..."
+#python manage.py runserver 0.0.0.0:8000
