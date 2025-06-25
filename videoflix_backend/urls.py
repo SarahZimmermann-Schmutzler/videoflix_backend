@@ -34,4 +34,13 @@ urlpatterns = [
     path('django-rq/', include('django_rq.urls')),
     path('api/videos/', VideosView.as_view()),
     path('api/videos/<videoId>/', VideosView.as_view()),
+    # for nginx
+    path('api/login/', LoginView.as_view(), name='login'),
+    path('api/register/', RegisterView.as_view()),
+    path('api/account_activation/', ActivateNewAccountView.as_view()),
+    path('api/forgotten_password/', ForgottenPasswordView.as_view()),
+    path('api/reset_password/', ResetPasswordView.as_view()),
+    path('api/logout/<userId>/', LogoutView.as_view()),
+    path('api/__debug__/', include('debug_toolbar.urls')),
+    path('api/django-rq/', include('django_rq.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT) + staticfiles_urlpatterns()

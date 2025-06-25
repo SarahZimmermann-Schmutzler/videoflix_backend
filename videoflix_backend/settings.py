@@ -44,12 +44,12 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    os.getenv('IP_ADDRESS_VM')
+    *os.getenv('IP_ADDRESS_VM', "").split(",")
 ]
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
-    os.getenv('CORS_ALLOWED_ORIGINS'),
+    *os.getenv('CORS_ALLOWED_ORIGINS', "").split(",")
 ]
 
 # CORS_ALLOW_ALL_ORIGINS = True
