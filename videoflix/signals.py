@@ -59,7 +59,7 @@ def activate_account(sender, instance, created, **kwargs):
         user = instance
         encoded_pk = urlsafe_base64_encode(force_bytes(user.pk))
         # activation_url = f'http://localhost:4200/activateAccount/{encoded_pk}'
-        activation_url = f'http://{os.getenv('ACTIVATION_URL')}/activateAccount/{encoded_pk}'
+        activation_url = f'https://{os.getenv('ACTIVATION_URL')}/activateAccount/{encoded_pk}'
         # url from frontend
         print('url', activation_url)
 
